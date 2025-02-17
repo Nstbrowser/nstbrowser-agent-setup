@@ -12,7 +12,7 @@ Nstagent version repository
 
 1. Install nstagent
   ```bash
-  sudo wget -qO- https://raw.githubusercontent.com/Zzzjm1919/open_agent/refs/heads/main/scripts/agent_install.sh | bash
+  sudo wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | bash
   ```
 
 The script installs fonts and kernels by default
@@ -29,7 +29,7 @@ skip fonts install
 
 example
 ```bash
-sudo wget -qO- https://raw.githubusercontent.com/Zzzjm1919/open_agent/refs/heads/main/scripts/agent_install.sh | bash -s -- --no-kernel --no-fonts
+sudo wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | bash -s -- --no-kernel --no-fonts
 ```
 
 2. Run agent

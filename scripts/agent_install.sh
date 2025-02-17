@@ -192,7 +192,7 @@ get_last_agent_version() {
     exit 1
   fi
 
-  AGENT_VERSION="v1.15.10"
+  AGENT_VERSION="v1.15.5"
   echo "Get latest agent version success, agent version: $AGENT_VERSION"
 }
 
@@ -218,7 +218,7 @@ download_agent() {
     return 1
   fi
 
-  tar -xzvf "/tmp/agent.tar.gz" --transform="s/agent_$AGENT_ARCH/agent/" --strip-components=8  -C ./
+  tar -xzvf "/tmp/agent.tar.gz" --transform="s/agent_$AGENT_ARCH/agent/"  -C ./
   echo "Download agent success"
   rm -rf "/tmp/agent.tar.gz"
   return 0
