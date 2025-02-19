@@ -21,25 +21,21 @@ AVAILABLE_DISK_MB=$(df -m "/" | awk 'NR==2 {print $4}')
 echo "Linux Distribution: $OS_DISTRIBUTION"
 echo "OS Release: $OS_RELEASE"
 
-# 判断发行版
 if [ "$OS_DISTRIBUTION" != "$REQUIRED_DISTRIBUTION" ]; then
   echo "The OS release must be $REQUIRED_DISTRIBUTION"
   exit 1
 fi
 
-# 判断发行版本号
 if awk -v a="$OS_RELEASE" -v b="$REQUIRED_RELEASE" 'BEGIN {exit (a >= b)}'; then
   echo "The OS release must be greater than or equal to $REQUIRED_RELEASE"
   exit 1
 fi
 
-# 判断可用内存
 if awk -v a="$AVAILABLE_MEM_MB" -v b="$REQUIRED_MEM_MB" 'BEGIN {exit (a >= b)}'; then
   echo "The memory must be greater than or equal to $REQUIRED_MEM_MB MB"
   exit 1
 fi
 
-# 判断可用磁盘
 if awk -v a="$AVAILABLE_DISK_MB" -v b="$REQUIRED_DISK_MB" 'BEGIN {exit (a >= b)}'; then
   echo "The system disk must be greater than or equal to $REQUIRED_DISK_MB MB"
   exit 1
@@ -72,7 +68,6 @@ while true; do
 done
 
 
-#=======install tools========
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC sudo apt-get -y install tzdata
 sudo apt-get install -y \
@@ -124,7 +119,6 @@ sudo apt-get install -y \
   libgbm-dev \
   libcurl3-gnutls
 
-# =======Kernel=======
 KERNEL_TYPE="nstchrome"
 DEFAULT_KERNEL_MILESTONE=130
 DEFAULT_KERNEL_VERSION="130-202412251400"
@@ -169,7 +163,6 @@ get_last_kernel_version
 TAG_VERSION=$(echo "$KERNEL_VERSION" | cut -d'-' -f2)
 
 
-# =======agent=======
 #AGENT="./agent"
 AGENT_VERSION=""
 NST_CHROME_DIR="/root/.nst-agent/download/kernels/nstchrome/$KERNEL_TYPE-$KERNEL_MILESTONE-$KERNEL_VERSION"
@@ -192,7 +185,7 @@ get_last_agent_version() {
     exit 1
   fi
 
-  AGENT_VERSION="v1.15.5"
+  AGENT_VERSION=$last_agent_version
   echo "Get latest agent version success, agent version: $AGENT_VERSION"
 }
 
