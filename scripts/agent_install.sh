@@ -7,8 +7,8 @@ if [ "$(id -un 2>/dev/null)" != 'root' ]; then
 fi
 
 # =======System=======
-REQUIRED_MEM_MB=4096     # 4GB
-REQUIRED_DISK_MB=20480   # 20GB
+REQUIRED_MEM_MB=2048     # 2GB
+REQUIRED_DISK_MB=10240   # 10GB
 REQUIRED_RELEASE=18.04
 REQUIRED_DISTRIBUTION="Ubuntu"
 ARCH=$(uname -m)
@@ -79,6 +79,8 @@ sudo apt-get install -y \
   psmisc \
   supervisor \
   gconf-service \
+
+sudo apt-get install -y \
   libasound2 \
   libatk1.0-0 \
   libatk-bridge2.0-0 \

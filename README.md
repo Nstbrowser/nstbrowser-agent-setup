@@ -24,7 +24,7 @@ This repository provides the **installation script for Nstagent**, enabling quic
 Run the following command to install the **latest version** of Nstagent:
 
 ```bash
-sudo wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | bash
+wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | sudo bash
 ```
 
 > **Note**: By default, the script installs necessary fonts and kernel. You can skip these installations using the following options:  
@@ -36,7 +36,7 @@ sudo wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-set
 Install Nstagent without fonts and kernel:
 
 ```bash
-sudo wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | bash -s -- --no-kernel --no-fonts
+wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | sudo bash -s -- --no-kernel --no-fonts
 ```
 
 ---
@@ -50,6 +50,24 @@ After installation, run the following command to start Nstagent:
 ```
 
 > **Default Service Port**: `8848`
+
+---
+## Supported Systems
+
+Nstbrowser Agent is compatible with the following operating systems and architectures:
+
+- **Ubuntu 22.04**:
+  - **Architecture**: AMD64 (x86_64)
+  - **Architecture**: ARM64 (aarch64)
+
+---
+## System Requirements
+
+To ensure optimal performance and functionality, Nstbrowser Agent requires the following system resources:
+
+- **Memory**: At least 2 GB of RAM is required.
+- **Disk Space**:At least 10 GB of free disk space is required.
+
 
 ---
 
@@ -74,7 +92,7 @@ For detailed API usage instructions, refer to the [Nstbrowser API Documentation]
 To install a specific version of Nstagent, modify the installation script URL to point to the desired branch or tag. For example:
 
 ```bash
-sudo wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/tags/<version>/scripts/agent_install.sh | bash
+wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/tags/<version>/scripts/agent_install.sh | sudo bash
 ```
 
 Replace `<version>` with the desired version tag.
