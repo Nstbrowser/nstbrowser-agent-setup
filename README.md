@@ -56,9 +56,15 @@ After installation, run the following command to start Nstagent:
 
 Nstbrowser Agent is compatible with the following operating systems and architectures:
 
+- **Ubuntu 24.04**:
+  - **Architecture**: AMD64 (x86_64)
+  - **Architecture**: ARM64 (aarch64)
+
 - **Ubuntu 22.04**:
   - **Architecture**: AMD64 (x86_64)
   - **Architecture**: ARM64 (aarch64)
+
+> **Note**: The Nstbrowser Agent is currently only supported on the specified versions of Ubuntu. Other operating systems and versions have not been tested or adapted for compatibility.
 
 ---
 ## System Requirements

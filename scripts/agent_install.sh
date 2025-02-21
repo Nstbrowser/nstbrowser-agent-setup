@@ -1,15 +1,22 @@
 #!/bin/bash
 
-if [ "$(id -un 2>/dev/null)" != 'root' ]; then
-    echo "Error: this installer needs the ability to run commands as root.
-          We are unable to find either 'sudo' or 'su' available to make this happen." >&2
-    exit 1
+NST_AGENT_DIR="$HOME/.nst-agent"
+
+if [ "$(id -u)" -eq 0 ]; then
+    SUDO=""
+else
+    if ! command -v sudo &> /dev/null; then
+        echo "Error: this installer needs the ability to run commands as root.
+              Please install sudo or run the script as root." >&2
+        exit 1
+    fi
+    SUDO="sudo"
 fi
 
 # =======System=======
 REQUIRED_MEM_MB=2048     # 2GB
 REQUIRED_DISK_MB=10240   # 10GB
-REQUIRED_RELEASE=18.04
+REQUIRED_RELEASE=22.04
 REQUIRED_DISTRIBUTION="Ubuntu"
 ARCH=$(uname -m)
 OS_DISTRIBUTION=$(lsb_release -i --short)
@@ -68,9 +75,9 @@ while true; do
 done
 
 
-sudo apt-get update
-DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC sudo apt-get -y install tzdata
-sudo apt-get install -y \
+$SUDO  apt-get update
+DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC $SUDO apt-get -y install tzdata
+$SUDO apt install -y \
   x11vnc \
   unzip \
   wget \
@@ -78,48 +85,98 @@ sudo apt-get install -y \
   jq \
   psmisc \
   supervisor \
-  gconf-service \
 
-sudo apt-get install -y \
-  libasound2 \
-  libatk1.0-0 \
-  libatk-bridge2.0-0 \
-  libc6 \
-  libcairo2 \
-  libcups2 \
-  libdbus-1-3 \
-  libexpat1 \
-  libfontconfig1 \
-  libgcc1 \
-  libgconf-2-4 \
-  libgdk-pixbuf2.0-0 \
-  libglib2.0-0 \
-  libgtk-3-bin \
-  libnspr4 \
-  libpango-1.0-0 \
-  libpangocairo-1.0-0 \
-  libstdc++6 \
-  libx11-6 \
-  libx11-xcb1 \
-  libxcb1 \
-  libxcomposite1 \
-  libxcursor1 \
-  libxdamage1 \
-  libxext6 \
-  libxfixes3 \
-  libxi6 \
-  libxrandr2 \
-  libxrender1 \
-  libxss1 \
-  libxtst6 \
-  ca-certificates \
-  fonts-liberation \
-  libappindicator1 \
-  libnss3 \
-  lsb-release \
-  xdg-utils \
-  libgbm-dev \
-  libcurl3-gnutls
+
+install_tools(){
+  case $OS_RELEASE in
+    "24.04")
+    $SUDO  apt-get install -y \
+      libasound2t64 \
+      libatk1.0-0t64 \
+      libatk-bridge2.0-0t64 \
+      libc6 \
+      libcups2t64 \
+      libdbus-1-3 \
+      libexpat1 \
+      libfontconfig1 \
+      libgdk-pixbuf2.0-0 \
+      libglib2.0-0t64 \
+      libgtk-3-bin \
+      libnspr4 \
+      libpango-1.0-0 \
+      libpangocairo-1.0-0 \
+      libstdc++6 \
+      libx11-6 \
+      libx11-xcb1 \
+      libxcb1 \
+      libxcomposite1 \
+      libxcursor1 \
+      libxdamage1 \
+      libxext6 \
+      libxfixes3 \
+      libxi6 \
+      libxrandr2 \
+      libxrender1 \
+      libxss1 \
+      libxtst6 \
+      ca-certificates \
+      fonts-liberation \
+      libnss3 \
+      lsb-release \
+      xdg-utils \
+      libgbm-dev \
+      libcurl3t64-gnutls
+          ;;
+    "22.04")
+    $SUDO  apt-get install -y \
+      libasound2 \
+      libatk1.0-0 \
+      libatk-bridge2.0-0 \
+      libc6 \
+      libcairo2 \
+      libcups2 \
+      libdbus-1-3 \
+      libexpat1 \
+      libfontconfig1 \
+      libgcc1 \
+      libgconf-2-4 \
+      libgdk-pixbuf2.0-0 \
+      libglib2.0-0 \
+      libgtk-3-bin \
+      libnspr4 \
+      libpango-1.0-0 \
+      libpangocairo-1.0-0 \
+      libstdc++6 \
+      libx11-6 \
+      libx11-xcb1 \
+      libxcb1 \
+      libxcomposite1 \
+      libxcursor1 \
+      libxdamage1 \
+      libxext6 \
+      libxfixes3 \
+      libxi6 \
+      libxrandr2 \
+      libxrender1 \
+      libxss1 \
+      libxtst6 \
+      ca-certificates \
+      fonts-liberation \
+      libappindicator1 \
+      libnss3 \
+      lsb-release \
+      xdg-utils \
+      libgbm-dev \
+      libcurl3-gnutls
+          ;;
+      *)
+        echo "Unsupported OS Release: $OS_RELEASE"
+        exit 1
+          ;;
+  esac
+}
+
+install_tools
 
 KERNEL_TYPE="nstchrome"
 DEFAULT_KERNEL_MILESTONE=130
@@ -165,10 +222,9 @@ get_last_kernel_version
 TAG_VERSION=$(echo "$KERNEL_VERSION" | cut -d'-' -f2)
 
 
-#AGENT="./agent"
 AGENT_VERSION=""
-NST_CHROME_DIR="/root/.nst-agent/download/kernels/nstchrome/$KERNEL_TYPE-$KERNEL_MILESTONE-$KERNEL_VERSION"
-NST_FONTS_DIR="/root/.nst-agent/download/fonts"
+NST_CHROME_DIR="$NST_AGENT_DIR/download/kernels/nstchrome/$KERNEL_TYPE-$KERNEL_MILESTONE-$KERNEL_VERSION"
+NST_FONTS_DIR="$NST_AGENT_DIR/download/fonts"
 NST_CHROME_FILENAME="$KERNEL_TYPE-$KERNEL_MILESTONE-$TAG_VERSION.linux-$KERNEL_ARCH.zip"
 
 get_last_agent_version() {
@@ -199,15 +255,15 @@ AGENT_DOWNLOAD_URL="https://github.com/Nstbrowser/nstbrowser-agent-setup/release
 
 
 init() {
-  sudo rm -rf "/tmp/$NST_CHROME_FILENAME" /tmp/fonts.zip /root/.nst-agent/download/kernels/nstchrome/* /root/.nst-agent/download/fonts
+  rm -rf "/tmp/$NST_CHROME_FILENAME" /tmp/fonts.zip "$NST_AGENT_DIR/download/kernels/nstchrome" "$NST_AGENT_DIR/download/fonts"
 
-  sudo mkdir -p "/root/.nst-agent/download/kernels/nstchrome"
-  sudo mkdir -p "$NST_FONTS_DIR"
+  mkdir -p "$NST_AGENT_DIR/download/kernels/nstchrome"
+  mkdir -p "$NST_FONTS_DIR"
 }
 
 download_agent() {
   echo "Start downloading agent..."
-  sudo wget -O "/tmp/agent.tar.gz" "$AGENT_DOWNLOAD_URL"
+  wget -O "/tmp/agent.tar.gz" "$AGENT_DOWNLOAD_URL"
   if [ $? -ne 0 ]; then
     echo "Download agent failed. Please check your network connection."
     return 1
@@ -228,14 +284,14 @@ download_kernel() {
   echo "Start downloading $KERNEL_MILESTONE kernel..."
   zip_file="/tmp/$NST_CHROME_FILENAME"
 
-  sudo wget -O "$zip_file" "$KERNEL_DOWNLOAD_URL"
+  wget -O "$zip_file" "$KERNEL_DOWNLOAD_URL"
   if [ $? -ne 0 ]; then
     echo "Download kernel failed. Please check your network connection."
     return 1
   fi
 
-  sudo unzip -q "$zip_file" -d "$NST_CHROME_DIR"
-  sudo rm -rf "$zip_file"
+  unzip -q "$zip_file" -d "$NST_CHROME_DIR"
+  rm -rf "$zip_file"
   echo "Download $KERNEL_MILESTONE kernel success"
 }
 
@@ -246,13 +302,13 @@ download_fonts() {
 
   echo "Start downloading fonts..."
   fonts_url="https://assets.nstbrowser.io/public/font/fonts.zip"
-  sudo wget -O "/tmp/fonts.zip" "$fonts_url"
+  wget -O "/tmp/fonts.zip" "$fonts_url"
   if [ $? -ne 0 ]; then
     echo "Failed to download fonts. Please check your network connection "
     return 1
   fi
-  sudo unzip -q "/tmp/fonts.zip" -d "$NST_FONTS_DIR"
-  sudo rm -rf /tmp/fonts.zip
+  unzip -q "/tmp/fonts.zip" -d "$NST_FONTS_DIR"
+  rm -rf /tmp/fonts.zip
   echo "Download fonts success"
 }
 
