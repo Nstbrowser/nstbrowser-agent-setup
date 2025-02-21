@@ -24,7 +24,7 @@ This repository provides the **installation script for Nstagent**, enabling quic
 Run the following command to install the **latest version** of Nstagent:
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | sudo bash
+wget -qO- https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download/v1.0/agent_install.sh | sudo bash
 ```
 
 > **Note**: By default, the script installs necessary fonts and kernel. You can skip these installations using the following options:  
@@ -36,7 +36,7 @@ wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/re
 Install Nstagent without fonts and kernel:
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/dev/scripts/agent_install.sh | sudo bash -s -- --no-kernel --no-fonts
+wget -qO- https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download/v1.0/agent_install.sh | sudo bash -s -- --no-kernel --no-fonts
 ```
 
 ---
@@ -91,17 +91,6 @@ To ensure optimal performance and functionality, Nstbrowser Agent requires the f
 Nstbrowser provides a robust API for developers to integrate and extend its functionality.  
 For detailed API usage instructions, refer to the [Nstbrowser API Documentation](https://apidocs.nstbrowser.io/folder-806337?nav=1).
 
----
-
-## Version Management
-
-To install a specific version of Nstagent, modify the installation script URL to point to the desired branch or tag. For example:
-
-```bash
-wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/tags/<version>/scripts/agent_install.sh | sudo bash
-```
-
-Replace `<version>` with the desired version tag.
 
 ---
 
