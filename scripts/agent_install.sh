@@ -269,7 +269,7 @@ download_agent() {
     return 1
   fi
 
-  tar -xzvf "/tmp/agent.tar.gz" --transform="s/agent_$AGENT_ARCH/agent/"  -C ./
+  tar -xzvf "/tmp/agent.tar.gz" --transform="s/agent_$AGENT_ARCH/agent/"  -C /usr/bin/
   echo "Download agent success"
   rm -rf "/tmp/agent.tar.gz"
   return 0
@@ -312,8 +312,34 @@ download_fonts() {
   echo "Download fonts success"
 }
 
+download_cli() {
+  if [ $ARCH == "x86_64" ]; then
+      cli_url="https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download/v1.0/nstcli-linux-amd64.zip"
+  else
+      cli_url="https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download/v1.0/nstcli-linux-arm64.zip"
+  fi
+
+  wget -O "/tmp/nstcli.zip" "$cli_url"
+  if [ $? -ne 0 ]; then
+    echo "Failed to download nstcli. Please check your network connection "
+    return 1
+  fi
+
+  unzip -j -q -o "/tmp/nstcli.zip" -d /usr/bin
+
+  rm -rf /tmp/fonts.zip
+
+  $SUDO chmod +x /usr/bin/nstcli
+
+  echo "Download nstcli success"
+}
+
 do_install() {
   init
+
+  if ! download_cli; then
+    exit 1
+  fi
 
   if ! download_kernel; then
     exit 1

@@ -24,7 +24,7 @@ This repository provides the **installation script for Nstagent**, enabling quic
 Run the following command to install the **latest version** of Nstagent:
 
 ```bash
-wget -qO- https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download/v1.0/agent_install.sh | sudo bash
+wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/main/scripts/agent_install.sh | sudo bash
 ```
 
 > **Note**: By default, the script installs necessary fonts and kernel. You can skip these installations using the following options:  
@@ -36,7 +36,7 @@ wget -qO- https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download
 Install Nstagent without fonts and kernel:
 
 ```bash
-wget -qO- https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download/v1.0/agent_install.sh | sudo bash -s -- --no-kernel --no-fonts
+wget -qO- https://raw.githubusercontent.com/Nstbrowser/nstbrowser-agent-setup/refs/heads/main/scripts/agent_install.sh | sudo bash -s -- --no-kernel --no-fonts
 ```
 
 ---
@@ -46,10 +46,19 @@ wget -qO- https://github.com/Nstbrowser/nstbrowser-agent-setup/releases/download
 After installation, run the following command to start Nstagent:
 
 ```bash
-./agent --referer=client
+agent --referer=client
 ```
 
 > **Default Service Port**: `8848`
+
+---
+
+## Nstcli: Command-Line Management
+
+To manage Nstagent efficiently, we provide **nstcli**, a command-line tool with various management capabilities. You can use `nstcli` to start, stop, upgrade, and inspect the agent, as well as manage profiles and kernel versions.
+
+For detailed usage instructions, please refer to the **[Nstcli Documentation](./docs/nstcli.md)**.
+
 
 ---
 ## Supported Systems
