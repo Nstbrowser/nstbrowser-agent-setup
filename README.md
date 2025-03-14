@@ -91,7 +91,7 @@ To ensure optimal performance and functionality, Nstbrowser Agent requires the f
 - **Official Website**: [Nstbrowser Website](https://www.nstbrowser.io/en)  
 - **Documentation**: [Nstbrowser Documentation](https://docs.nstbrowser.io/)  
 - **Download**: [Nstbrowser Download Page](https://www.nstbrowser.io/en/download)  
-- **Community Support**: [Join Our Discord Community](https://discord.gg/apuW9DgB)  
+- **Community Support**: [Join Our Discord Community](https://discord.gg/GgExjxCz8D)  
 
 ---
 
