@@ -1,9 +1,20 @@
-# nstcli
+# Nstcli
 
 nstcli is a command-line tool designed for managing the agent client efficiently.
 
+## Setting Up Token Environment Variable
 
-## Basic Commands
+Before using nstcli, you need to set the TOKEN environment variable:
+
+```bash
+export TOKEN="YOU_API_KEY"
+```
+
+---
+
+## Basic Usage
+
+The following examples demonstrate the basic usage of Nst CLI.
 
 ### Agent Management
 
